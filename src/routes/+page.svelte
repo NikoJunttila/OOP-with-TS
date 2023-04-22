@@ -8,6 +8,7 @@
 	import barkmp3 from "$lib/assets/bark.mp3"
 	import meowmp3 from "$lib/assets/meow.mp3"
 	import pullupmp3 from "$lib/assets/pullup.mp3"
+	import { fly } from 'svelte/transition';
 
 	class Animal {
 		constructor(
@@ -192,6 +193,7 @@
 	}
 
 	async function addDog() {
+		loading = true
 		const breeds = ['Dingo', 'Eskimo', 'Samoyed', 'Akita'];
 		const age = Math.floor(Math.random() * 20);
 		const breed = breeds[Math.floor(Math.random() * 3)];
@@ -209,6 +211,8 @@
 		animals.addAnimal(newDog);
 		printAnimals();
 		name = '';
+		loading = false;
+		
 	}
 
 	let animalToShow : any;
@@ -224,6 +228,11 @@
 }
 	// Poista eläin
 	//animals.removeAnimal("Buddy");
+	function deleteAnimal(name : string){
+		animals.removeAnimal(name)
+		printAnimals()
+		animalToShow = false;
+	}
 
 	// Tulosta kaikki eläimet
 	let allAnimals: any;
@@ -253,7 +262,7 @@
 	const pullup: ToastSettings = {
 		message: "OK I pull up!"
 	}
-
+let loading : boolean = false
 
 
 </script>
@@ -268,18 +277,24 @@
 </header>
 <div class="text-center">
 	<a href="sources"><h2>Go to source codes page</h2></a>
-	<p class="pb-3">click animals to show info</p>
+	<p>click animals to show info</p>
+	<p class="scale-50 pb-3">You can break website by trying to enter 2 same name animals but i cba fixing it*</p>
 </div>
 
 <section class="grid-container">
 	{#if allAnimals}
-		{#each allAnimals as animal, index}
+		{#each allAnimals as animal, index (animal.name)}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div on:click={() => showAnimal(animal.name,index)} class="hover:scale-110 cursor-pointer">
+			<div transition:fly="{{y:200, duration: 2000}}" on:click={() => showAnimal(animal.name,index)} class="hover:scale-110 cursor-pointer">
 				{animal.name}
 				<img src={animal.image} alt="animal" />
 			</div>
 		{/each}
+	{/if}
+	{#if loading}
+	<div>
+		loading dog img. coming from API so might be slow 😕
+	</div>
 	{/if}
 </section>
 {#if animalToShow}
@@ -302,6 +317,7 @@
 	{#if animalToShow.species === "Pulu"}
 	<button on:click={() =>animalToShow.shitOnYou()}>💩</button>
 	{/if}
+	<button on:click={() => deleteAnimal(animalToShow.name)}>release ಠ_ಠ</button>
 	<img class="rounded" src={animalToShow.image} alt="big">
 </div>
 {/if}
@@ -318,7 +334,7 @@
 	}
 
 	.grid-container > div {
-		transition: transform 0.5s ease-in-out;
+		transition: transform 1s ;
 		width: 100%;
 		object-fit: cover;
 		height: 25vh;
