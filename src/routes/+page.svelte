@@ -32,6 +32,7 @@
 			console.log('Meow!');
 			toastStore.trigger(meow);
 			const audio = new Audio(meowmp3);
+			audio.volume = 0.2;
   			audio.play();
 		}
 	}
@@ -50,6 +51,7 @@
 			console.log('Woof!');
 			toastStore.trigger(bark);
 			  const audio = new Audio(barkmp3);
+			  audio.volume = 0.2;
   			  audio.play();
 		}
 	}
@@ -68,7 +70,8 @@
 			console.log('ok i pull up');
 			toastStore.trigger(pullup);
 			const audio = new Audio(pullupmp3);
-  			  audio.play();
+			audio.volume = 0.1;
+  			audio.play();
 		}
 	}
 	class Birdy extends Animal {
@@ -303,7 +306,9 @@
 </div>
 {/if}
 <Toast />
-
+<svelte:head>
+	<title>Animals OOP</title>
+</svelte:head>
 <style>
 	.grid-container {
 		padding: 0.5rem;
