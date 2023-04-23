@@ -267,14 +267,19 @@ let loading : boolean = false
 
 </script>
 
-<header class="flex gap-4 justify-center align-middle py-10">
-	<div>name for new animal:<input class="text-black mx-2 rounded-lg" bind:value={name} type="text" placeholder="Derp" /></div>
-	<span>Add: </span>
+<header class="flex justify-center gap-1 align-middle py-10">
+	<div><p class="ml-5">name for new animal:</p><input class="text-black mx-2 rounded-lg" bind:value={name} type="text" placeholder="Derp" /></div>
+	<div class="flex flex-col justify-center align-middle">
+		<p class="smalltext">press buttons to add new animal</p>
+<div class="flex gap-2 justify-center align-middle">
 	<button on:click={addCaby}>Caby</button>
 	<button on:click={addCat}>Cat</button>
 	<button on:click={addDog}>Dog</button>
 	<button on:click={addPulu}>Pulu</button>
+</div>
+	</div>
 </header>
+
 <div class="text-center">
 	<a href="sources"><h2>Go to source codes page</h2></a>
 	<p>click animals to show info</p>
@@ -285,7 +290,7 @@ let loading : boolean = false
 	{#if allAnimals}
 		{#each allAnimals as animal, index (animal.name)}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<div transition:fly="{{y:200, duration: 2000}}" on:click={() => showAnimal(animal.name,index)} class="hover:scale-110 cursor-pointer">
+			<div in:fly="{{x:200, duration: 2000}}" out:fly="{{y:200, duration: 2000}}" on:click={() => showAnimal(animal.name,index)} class="hover:scale-110 cursor-pointer">
 				{animal.name}
 				<img src={animal.image} alt="animal" />
 			</div>
@@ -297,6 +302,8 @@ let loading : boolean = false
 	</div>
 	{/if}
 </section>
+
+
 {#if animalToShow}
 <div class="flex justify-center gap-2 items-center flex-col">
 	<p>Name: {animalToShow.name}</p>
@@ -321,6 +328,9 @@ let loading : boolean = false
 	<img class="rounded" src={animalToShow.image} alt="big">
 </div>
 {/if}
+
+
+
 <Toast />
 <svelte:head>
 	<title>Animals OOP</title>
@@ -345,6 +355,9 @@ let loading : boolean = false
 		border-radius: 10px;
 		overflow: hidden;
 	}
+	.smalltext{
+		font-size: 0.7rem;
+	}
 	button {
 color:black;
  padding: 5px;
@@ -368,4 +381,12 @@ button:focus{
 	transition: transform 0.5s ease-in-out;
 	scale: 1.1;
 }
+
+@media(max-width: 500px){
+	button{
+		padding : 2 4px;
+		font-size: 0.75rem;
+	}
+}
+
 </style>
