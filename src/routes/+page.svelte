@@ -133,7 +133,7 @@
 	const pulu = new Birdy(
 		'Viola',
 		5,
-		'https://cdn.discordapp.com/attachments/402846336799473669/1099344431934603346/IMG-20230406-WA0001.jpg'
+		'https://www.kaijuli.fi/images/artikkelit/neitokakadu-ruokinta.jpg'
 	);
 	animals.addAnimal(cat);
 	animals.addAnimal(dog);
